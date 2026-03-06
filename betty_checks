@@ -1,0 +1,11 @@
+#include <stdio.h>
+/**
+* main - entry point
+* Description - betty checking code
+* Return:0
+*/
+{
+int main(void)
+printf("HelloWorld");
+return (0);
+}
